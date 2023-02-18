@@ -157,11 +157,8 @@ class TestAccountService(TestCase):
     def test_update_account_not_found(self):
         """It should not Update an Account that is not found"""
         # create an Account to update
-        test_account = AccountFactory()
-        resp = self.client.post(BASE_URL, json=test_account.serialize())
-        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        test_account = AccountFactory().serialize()
         # update non exist account
-        new_account = resp.get_json()
-        new_account["name"] = "Something Known"
-        resp = self.client.put(f"{BASE_URL}/0", json=new_account)
+        test_account["name"] = "Something Known"
+        resp = self.client.put(f"{BASE_URL}/0", json=test_account)
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
