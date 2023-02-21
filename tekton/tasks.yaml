@@ -63,7 +63,7 @@ spec:
       description: The parameters needed for nosetests
       type: string
       default: "-v"
-    - name: database_url
+    - name: database_uri
       description: The test database for the nosetests
       type: string
       default: "sqlite:///test.db"
@@ -72,8 +72,8 @@ spec:
       image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       env:
-        - name: database_url
-          value: $(params.database_url)
+        - name: DATABASE_URI
+          value: $(params.database_uri)
       script: |
         #!/bin/bash
         set -e
