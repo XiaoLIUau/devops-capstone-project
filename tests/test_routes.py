@@ -21,6 +21,7 @@ DATABASE_URI = os.getenv(
 BASE_URL = "/accounts"
 HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
+
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
@@ -155,7 +156,7 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
-    
+
     def test_update_account_not_found(self):
         """It should not Update an Account that is not found"""
         # create an Account to update
@@ -188,10 +189,10 @@ class TestAccountService(TestCase):
         resp = self.client.delete(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
-   ######################################################################
+    ######################################################################
     #  S E C U R I T Y  T E S T   C A S E S
     ######################################################################
+
     def test_security_headers(self):
         """It should return security headers"""
         resp = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
@@ -211,4 +212,4 @@ class TestAccountService(TestCase):
         resp = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         # Check for the CORS header
-        self.assertEqual(resp.headers.get('Access-Control-Allow-Origin'),'*')
+        self.assertEqual(resp.headers.get('Access-Control-Allow-Origin'), '*')
